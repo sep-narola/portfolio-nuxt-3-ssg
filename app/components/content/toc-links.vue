@@ -1,0 +1,31 @@
+<template>
+  <ul>
+    <li v-for="link in links" :key="link.id">
+      <NuxtLink
+        :to="{ path: route.path, hash: `#${link.id}` }"
+        :class="{
+          'ml-4': level,
+          'text-green-600 dark:text-green-400': activeId === link.id,
+        }"
+      >
+        {{ link.text }}
+        <TocLinks
+          :links="link.children"
+          :level="level + 1"
+          :active-id="activeId"
+        />
+      </NuxtLink>
+    </li>
+  </ul>
+</template>
+
+<script lang="ts" setup>
+const route = useRoute();
+defineProps({
+  links: Array<any>,
+  level: { type: Number, default: 0 },
+  activeId: { type: String, default: null },
+});
+</script>
+
+<style></style>
